@@ -30,13 +30,13 @@ public class CategoriaController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/crear")
     public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria categoria) {
         Categoria nuevaCategoria = categoriaService.save(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaCategoria);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<Categoria> update(@PathVariable Long id, @Valid @RequestBody Categoria categoria) {
         if (!categoriaService.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();
@@ -46,7 +46,7 @@ public class CategoriaController {
         return ResponseEntity.ok(actualizada);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/borrar/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         if (!categoriaService.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();

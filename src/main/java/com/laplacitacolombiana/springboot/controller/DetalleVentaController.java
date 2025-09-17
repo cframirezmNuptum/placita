@@ -24,18 +24,18 @@ public class DetalleVentaController {
         return detalleVentaService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/crear")
     public DetalleVenta create(@Valid @RequestBody DetalleVenta detalleVenta) {
         return detalleVentaService.save(detalleVenta);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public DetalleVenta update(@PathVariable Long id, @Valid @RequestBody DetalleVenta detalleVenta) {
         detalleVenta.setId(id);
         return detalleVentaService.save(detalleVenta);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/borrar/{id}")
     public void delete(@PathVariable Long id) {
         detalleVentaService.delete(id);
     }

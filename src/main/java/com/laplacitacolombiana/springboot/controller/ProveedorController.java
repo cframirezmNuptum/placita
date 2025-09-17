@@ -23,18 +23,18 @@ public class ProveedorController {
         return proveedorService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/crear")
     public Proveedor create(@RequestBody Proveedor proveedor) {
         return proveedorService.save(proveedor);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public Proveedor update(@PathVariable Long id, @Valid @RequestBody Proveedor proveedor) {
         proveedor.setId(id);
         return proveedorService.save(proveedor);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/borrar/{id}")
     public void delete(@PathVariable Long id) {
         proveedorService.delete(id);
     }

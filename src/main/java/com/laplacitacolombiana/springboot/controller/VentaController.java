@@ -26,18 +26,18 @@ public class VentaController {
         return ventaService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/crear")
     public Venta create(@RequestBody @Valid Venta venta) {
         return ventaService.save(venta);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public Venta update(@PathVariable Long id, @RequestBody @Valid Venta venta) {
         venta.setId(id);
         return ventaService.save(venta);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/borrar/{id}")
     public void delete(@PathVariable Long id) {
         ventaService.delete(id);
     }

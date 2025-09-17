@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -29,12 +30,12 @@ public class RolController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Rol> create(@Valid @RequestBody Rol rol) {
+    @PostMapping("/crear")
+    public ResponseEntity<?> create(@Valid @RequestBody Rol rol) {
         return ResponseEntity.ok(rolService.save(rol));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<Rol> update(@PathVariable Long id, @Valid @RequestBody Rol rol) {
         if (!rolService.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();
@@ -43,7 +44,7 @@ public class RolController {
         return ResponseEntity.ok(rolService.save(rol));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/borrar/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         if (!rolService.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();

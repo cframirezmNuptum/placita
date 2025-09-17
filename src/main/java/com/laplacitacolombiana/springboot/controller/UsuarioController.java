@@ -26,18 +26,18 @@ public class UsuarioController {
         return usuarioService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/crear")
     public Usuario create(@RequestBody @Valid Usuario usuario) {
         return usuarioService.save(usuario);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public Usuario update(@PathVariable Long id, @RequestBody @Valid Usuario usuario) {
         usuario.setId(id);
         return usuarioService.save(usuario);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/borrar/{id}")
     public void delete(@PathVariable Long id) {
         usuarioService.delete(id);
     }
