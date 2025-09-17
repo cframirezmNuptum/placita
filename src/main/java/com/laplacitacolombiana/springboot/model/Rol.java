@@ -1,9 +1,9 @@
+
 package com.laplacitacolombiana.springboot.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import java.util.List;
-
 
 @Entity
 public class Rol {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
+
 @Entity
 public class Usuario {
 
@@ -24,7 +25,7 @@ public class Usuario {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, message = "La contraseña debe tener 6 caracteres")
+    @Size(min = 6, message = "La contraseña debe tener mínimo 6 caracteres")
     private String password;
 
     @NotBlank(message = "El teléfono es obligatorio")
@@ -45,7 +46,6 @@ public class Usuario {
     @JsonIgnoreProperties({"usuarios"})
     private Rol rol;
 
-    // Getters y setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -76,6 +76,7 @@ public class Usuario {
     public Rol getRol() { return rol; }
     public void setRol(Rol rol) { this.rol = rol; }
 }
+
 
 
 
