@@ -1,11 +1,9 @@
 package com.laplacitacolombiana.springboot.controller;
-
-
 import com.laplacitacolombiana.springboot.model.Proveedor;
 import com.laplacitacolombiana.springboot.service.ProveedorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +29,7 @@ public class ProveedorController {
     }
 
     @PutMapping("/{id}")
-    public Proveedor update(@PathVariable Long id, @RequestBody Proveedor proveedor) {
+    public Proveedor update(@PathVariable Long id, @Valid @RequestBody Proveedor proveedor) {
         proveedor.setId(id);
         return proveedorService.save(proveedor);
     }
@@ -41,3 +39,4 @@ public class ProveedorController {
         proveedorService.delete(id);
     }
 }
+

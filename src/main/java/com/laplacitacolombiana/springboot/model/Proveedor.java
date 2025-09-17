@@ -1,6 +1,8 @@
 package com.laplacitacolombiana.springboot.model;
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Proveedor {
@@ -9,8 +11,18 @@ public class Proveedor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     private String nombre;
+
+    @NotBlank(message = "El teléfono es obligatorio")
+    @Pattern(
+            regexp = "^[+\\d][\\d\\s\\-()]{6,19}$",
+            message = "El teléfono contiene un formato inválido")
     private String telefono;
+
+    @NotBlank(message = "La dirección es obligatoria")
+    @Size(max = 150, message = "La dirección no debe exceder 150 caracteres")
     private String direccion;
 
     public Long getId() {

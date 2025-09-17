@@ -1,6 +1,8 @@
 package com.laplacitacolombiana.springboot.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 public class DetalleVenta {
@@ -9,8 +11,11 @@ public class DetalleVenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Positive(message = "Debe ingresar la cantidad mayor a 0")
     private int cantidad;
+    @Positive(message = "Debe ser mayor a 0")
     private double precioUnitario;
+    @PositiveOrZero(message = "El subtotal no puede ser negativo")
     private double subtotal;
 
     @ManyToOne

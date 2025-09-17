@@ -1,7 +1,7 @@
 package com.laplacitacolombiana.springboot.controller;
-
 import com.laplacitacolombiana.springboot.model.DetalleVenta;
 import com.laplacitacolombiana.springboot.service.DetalleVentaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,12 +25,12 @@ public class DetalleVentaController {
     }
 
     @PostMapping
-    public DetalleVenta create(@RequestBody DetalleVenta detalleVenta) {
+    public DetalleVenta create(@Valid @RequestBody DetalleVenta detalleVenta) {
         return detalleVentaService.save(detalleVenta);
     }
 
     @PutMapping("/{id}")
-    public DetalleVenta update(@PathVariable Long id, @RequestBody DetalleVenta detalleVenta) {
+    public DetalleVenta update(@PathVariable Long id, @Valid @RequestBody DetalleVenta detalleVenta) {
         detalleVenta.setId(id);
         return detalleVentaService.save(detalleVenta);
     }
@@ -40,4 +40,6 @@ public class DetalleVentaController {
         detalleVentaService.delete(id);
     }
 }
+
+
 
