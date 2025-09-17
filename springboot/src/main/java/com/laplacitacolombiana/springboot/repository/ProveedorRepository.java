@@ -1,0 +1,7 @@
+package com.laplacitacolombiana.springboot.repository;
+
+import com.laplacitacolombiana.springboot.model.Proveedor;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProveedorRepository extends JpaRepository<Proveedor, Long> {}
+
