@@ -21,6 +21,10 @@ public class Producto {
     @JoinColumn(name = "id_proveedor")
     private Proveedor proveedor;
 
+
+
+
+
     public Long getId() {
         return id;
     }
