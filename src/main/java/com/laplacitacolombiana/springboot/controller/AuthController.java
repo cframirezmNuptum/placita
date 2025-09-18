@@ -15,10 +15,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins = "http://127.0.0.1:5501")
 public class AuthController {
 
     @Autowired
@@ -80,5 +82,6 @@ public class AuthController {
     public ResponseEntity<String> getProtectedResource() {
         return ResponseEntity.ok("Este es un recurso protegido!");
     }
+
 }
 
