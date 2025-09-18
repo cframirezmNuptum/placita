@@ -3,6 +3,8 @@ package com.laplacitacolombiana.springboot.service;
 import com.laplacitacolombiana.springboot.model.Usuario;
 import com.laplacitacolombiana.springboot.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,7 +55,16 @@ public class UsuarioService {
         if (user == null) {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+
+        // Crear autoridades basadas en el rol
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRol().getNombre().toUpperCase()));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                authorities
+        );
     }
 
     public List<Usuario> findAll() {
@@ -66,6 +77,10 @@ public class UsuarioService {
 
     public Optional<Usuario> findById(Long id) {
         return usuarioRepository.findById(id);
+    }
+
+    public Usuario findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
     }
 
     public void delete(Long id) {

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -47,18 +48,32 @@ public class AuthController {
 
         // Continue with registration logic
         usuarioService.registerUser(usuario);
-        return  ResponseEntity.ok(usuario);
+        return ResponseEntity.ok(usuario);
     }
 
     @PostMapping("/loginConDTO")
-    public ResponseEntity<String> loginConDTO(@RequestBody UsuarioDto usuarioDto) {
-        UserDetails userDetails = usuarioService.loadUserByUsername(usuarioDto.getEmail());
-        if (userDetails != null && passwordEncoder.matches(usuarioDto.getPassword(), userDetails.getPassword())) {
-            String token = jwtUtil.generateToken(userDetails.getUsername());
-            return ResponseEntity.ok(token);
+    public ResponseEntity<?> loginConDTO(@RequestBody UsuarioDto usuarioDto) {
+        try {
+            UserDetails userDetails = usuarioService.loadUserByUsername(usuarioDto.getEmail());
+            if (passwordEncoder.matches(usuarioDto.getPassword(), userDetails.getPassword())) {
+                String token = jwtUtil.generateToken(userDetails.getUsername());
+
+                // Buscar usuario en BD para devolver info adicional
+                Usuario usuario = usuarioService.findByEmail(usuarioDto.getEmail());
+
+                Map<String, Object> response = new HashMap<>();
+                response.put("token", token);
+                response.put("usuario", usuario.getNombre());
+                response.put("rolID", usuario.getRol().getId());
+
+                return ResponseEntity.ok(response);
+            }
+            return ResponseEntity.status(401).body("Credenciales inválidas");
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(401).body("Credenciales inválidas");
         }
-        return ResponseEntity.status(401).body("Credenciales inválidas");
     }
+
 
     @GetMapping("/resource")
     @PreAuthorize("hasRole('USER')")
